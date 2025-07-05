@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>To-Do List</title>
+  <link rel="icon" href="https://imgs.search.brave.com/VGufMRCXjV6yznbIV3leLQvxVIx_0CinqM_1jl2SN_E/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzAzLzkyLzk5Lzg2/LzM2MF9GXzM5Mjk5/ODY0N19IUmVLWkdS/ZTRHY3hUanRlblo2/Tkl6ZnZLUWtkREcx/TC5qcGc">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&display=swap"/>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"rel="stylesheet"/>
+</head>
+<body>
+  <div id="container">
+    <div id="todo-container">
+      <div id="todo-heading">
+        <h1 id="heading">To-Do List</h2>
+      </div>
+      <div id="todo-input">
+        <input id="user-input" type="text" placeholder="Add Your Works !!!" maxlength="50"/>
+        <button id="user-input-button">Add</button>
+      </div>
+
+      <div id="todo-list-items">
+        <ul id="todo-list"></ul>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background-image: url(https://imgs.search.brave.com/l0NW-PmDc57ABIB0tvbmxERXNpKyyzR6XtYD8lMNAu0/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzAyLzM0Lzk4Lzcz/LzM2MF9GXzIzNDk4/NzM2NV8xYndtSHlV/alZPS0lpYldFYm53/YWF5RTlGUWlxMnhw/dS5qcGc);
+      background-size: cover;
+      background-position: top;
+    }
+
+    #container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    #todo-container {
+      background-color: rgba(0, 0, 0, 0.3);
+      width: 100%;
+      max-width: 580px;
+      border-radius: 15px;
+      box-shadow: 3px 3px 15px black;
+      padding: 20px;
+    }
+
+    #todo-heading {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    #heading {
+      color: white;
+      font-size: 40px;
+      font-weight: 800;
+    }
+
+    #todo-input {
+      position: relative;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+
+    #user-input {
+      width: 450px;
+      max-width: 100%;
+      height: 47px;
+      border-radius: 25px;
+      border: 1px solid black;
+      background-color: black;
+      color: rgb(161, 209, 228);
+      font-size: 18px;
+      padding: 10px 100px 10px 20px; 
+    }
+
+    #user-input::placeholder {
+      color: rgb(161, 209, 228);
+    }
+
+    #user-input:focus {
+      outline: none;
+    }
+
+    #user-input-button {
+      position: absolute;
+      height: 46px;
+      right: calc(50% - 225px + 1px); 
+      width: 100px;
+      border-radius: 20px;
+      border: none;
+      background-color: rgb(121, 121, 236);
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    #user-input-button:hover {
+      background-color: rgb(72, 72, 136);
+      transform: translateX(3px);
+    }
+
+    #user-input-button:active {
+      background-color: rgba(0, 0, 0, 0.7);
+    }
+
+    #todo-list-items {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    li {
+      margin-top: 15px;
+      background-color: rgba(135, 207, 235, 0.562);
+      width: 90%;
+      max-width: 430px;
+      font-size: 17px;
+      display: grid;
+      grid-template-columns: auto 1fr auto; 
+      align-items: center; 
+      border-radius: 10px;
+      padding: 10px 12px;
+      transition: 0.25s;
+      overflow: hidden;
+      gap: 10px;
+    }
+
+    li:hover {
+      box-shadow: 1px 1px 10px gray;
+      transform: translateY(-2px);
+    }
+
+    .check-icon {
+      border-radius: 50%;
+      min-width: 20px;
+      min-height: 20px;
+      background-color: white;
+      display: flex;
+      cursor: pointer;
+    }
+
+    .todo-text {
+      word-break: break-word;
+      white-space: normal;
+      padding: 5px 8px;
+    }
+
+    .delete-todo {
+      border: none;
+      background: none;
+      cursor: pointer;
+      transition: 0.2s;
+      flex-shrink: 0;
+    }
+
+    .delete-icon {
+      font-size: 27px;
+    }
+
+    .delete-todo:hover {
+      color: red;
+    }
+
+    input[type='checkbox'] {
+      display: none;
+    }
+
+    input[type='checkbox']:checked ~ label .check-icon {
+      color: rgb(0, 255, 98);
+      background-color: rgba(44, 43, 43, 0.719);
+    }
+
+    input[type='checkbox']:checked ~ .todo-text {
+      text-decoration: line-through;
+      color: rgb(70, 70, 71);
+    }
+
+    @media (max-width: 600px) {
+      #todo-input {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      #user-input {
+        padding: 10px 20px;
+        width: 90%;
+      }
+
+      #user-input-button {
+        position: static;
+        margin-top: 10px;
+        width: 90%;
+      }
+
+      #heading {
+        font-size: 30px;
+      }
+
+      li {
+        width: 95%;
+      }
+    }
+  </style>
+
+  <script>
+    const input = document.getElementById("user-input");
+    const addButton = document.getElementById("user-input-button");
+    const todoList = document.getElementById("todo-list");
+
+    let todoCount = 0;
+
+    function addTodo() {
+      const text = input.value.trim();
+      if (text === "") return;
+
+      todoCount++;
+
+      const li = document.createElement("li");
+
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.id = `todo-${todoCount}`;
+
+      const checkLabel = document.createElement("label");
+      checkLabel.setAttribute("for", checkbox.id);
+      checkLabel.innerHTML = `<span class="material-symbols-outlined check-icon">check</span>`;
+
+      const textLabel = document.createElement("label");
+      textLabel.setAttribute("for", checkbox.id);
+      textLabel.className = "todo-text";
+      textLabel.textContent = text;
+
+      const deleteButton = document.createElement("button");
+      deleteButton.className = "delete-todo";
+      deleteButton.innerHTML = `<span class="material-symbols-outlined delete-icon">delete</span>`;
+      deleteButton.addEventListener("click", () => li.remove());
+
+      li.appendChild(checkbox);
+      li.appendChild(checkLabel);
+      li.appendChild(textLabel);
+      li.appendChild(deleteButton);
+      todoList.appendChild(li);
+
+      input.value = "";
+    }
+
+    addButton.addEventListener("click", addTodo);
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") addTodo();
+    });
+  </script>
+</body>
+</html>
